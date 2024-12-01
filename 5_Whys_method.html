@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5 Whys Analysis Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; padding: 0; }
+    .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+    label { font-weight: bold; margin-top: 10px; display: block; }
+    textarea, input, button { width: 100%; padding: 10px; margin-top: 5px; }
+    button { background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .success { color: green; font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>5 Whys Analysis Form</h1>
+    <form id="whysForm">
+      <label for="problem">Problem:</label>
+      <textarea id="problem" rows="2" required></textarea>
+
+      <label for="why1">Why 1:</label>
+      <textarea id="why1" rows="2" required></textarea>
+
+      <label for="why2">Why 2:</label>
+      <textarea id="why2" rows="2" required></textarea>
+
+      <label for="why3">Why 3:</label>
+      <textarea id="why3" rows="2" required></textarea>
+
+      <label for="why4">Why 4:</label>
+      <textarea id="why4" rows="2" required></textarea>
+
+      <label for="why5">Why 5:</label>
+      <textarea id="why5" rows="2" required></textarea>
+
+      <label for="solution">Solution:</label>
+      <textarea id="solution" rows="2" required></textarea>
+
+      <button type="button" onclick="submitForm()">Submit</button>
+      <p id="responseMessage" class="success"></p>
+    </form>
+  </div>
+
+  <script>
+    const submitForm = () => {
+      const form = document.getElementById('whysForm');
+      const data = {
+        problem: document.getElementById('problem').value,
+        why1: document.getElementById('why1').value,
+        why2: document.getElementById('why2').value,
+        why3: document.getElementById('why3').value,
+        why4: document.getElementById('why4').value,
+        why5: document.getElementById('why5').value,
+        solution: document.getElementById('solution').value,
+      };
+
+      fetch('WEB_APP_URL', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then(response => response.text())
+        .then(result => {
+          document.getElementById('responseMessage').textContent = "Form submitted successfully!";
+          form.reset();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('responseMessage').textContent = "Error submitting form.";
+        });
+    };
+  </script>
+</body>
+</html>
